@@ -1,0 +1,18 @@
+### Django ###
+*.log
+*.pot
+*.pyc
+*.DS_Store
+__pycache__/
+migrations/
+local_settings.py
+settings.py
+db.sqlite3
+db.sqlite3-journal
+media
+
+# Environments
+.env
+
+### Extras ###
+regiones-chile.csv
