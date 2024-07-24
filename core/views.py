@@ -19,13 +19,16 @@ def crear_user(request):
         #data = cleaned_data(request.POST)
         #User.objects.create(**data)
         Usuario.objects.create(
-            user = user,
-            rut = request.POST['rut']
+             user = user,
+             rut = request.POST['rut'],
         )
-        return redirect('perfil')
+        return redirect('exito')
     else:
-        return render(request, 'registro_usuario.html')
+        return render(request, 'crear_user.html')
 
+
+def exito(request):
+    return render(request, 'exito.html')
 
 # b. actualizar sus datos
 # c. poder identificarse como arrendatario o como arrendador

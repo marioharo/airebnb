@@ -8,10 +8,10 @@ class Usuario(models.Model):
     nombre = models.CharField(max_length=50)
     apellido = models.CharField(max_length=50)
     direccion = models.CharField(max_length=200)
-    telefono_personal = models.IntegerField()
+    telefono_personal = models.IntegerField(null=True)
     correo_electronico = models.EmailField()
     TIPO_USUARIO = {
-        'arrendatario' : 'arrendatario',
+        'arrendatario' : 'arrendatario',    
         'arrendador' : 'arrendador'
     }
     tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO)
@@ -61,7 +61,7 @@ class Comuna(models.Model):
     region = models.CharField(max_length=50)
 
     def __str__(self) -> str:
-        return f'{self.region}: {self.nombre_comuna}'
+        return f'{self.id} {self.region}: {self.nombre_comuna}'
     
     class Meta:
         #ordering = ['region']

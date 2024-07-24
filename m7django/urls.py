@@ -20,4 +20,6 @@ from core import views as core_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('', core_views.crear_user, name='crear_user'),
+    path('exito/', core_views.exito, name='exito'),
 ]

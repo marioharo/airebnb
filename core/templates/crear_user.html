@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+{% block title %}Crear Usuario{% endblock title %}
+{% block content %}
+<div class="container">
+<h2 class='text-center'>Formulario crear usuario</h2>
+    <form class='col-6 mx-auto' action='' method="post">
+        {% csrf_token %}
+        <div class="my-3">
+          <label class="form-label">Usuario</label>
+          <input name='username' type="text" class="form-control" placeholder='Ejemplo: Juan perez' required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">Rut</label>
+          <input name='rut' type="text" class="form-control" maxlength='9' placeholder='111111111' required>
+        </div>
+        <div class="my-3">
+            <label class="form-label">Contraseña</label>
+            <input name='password' type="password" class="form-control" aria-describedby="emailHelp" required>
+            <div id="emailHelp" class="form-text">No compartiremos tu contraseña con nadie.</div>
+        </div>
+        <button type="submit" class="btn btn-primary my-2">Crear usuario</button>
+    </form>
+</div>
+{% endblock content %}
