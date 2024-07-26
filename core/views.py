@@ -9,7 +9,6 @@ from django.contrib.auth.decorators import login_required
 def index(request):
     return redirect('crear_usuario')
 
-
 # a. lograr registrarse en la app
 def crear_usuario(request):
     if request.method == 'GET':
@@ -34,6 +33,9 @@ def crear_usuario(request):
 def exito(request):
     return render(request, 'exito.html')
 
+
+def perfil(request):
+    return render(request, 'perfil.html', {})
 
 # b. actualizar sus datos
 # c. poder identificarse como arrendatario o como arrendador

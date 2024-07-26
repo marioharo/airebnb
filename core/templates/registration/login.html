@@ -2,23 +2,24 @@
 {% block content %}
 <div class="container">
     <h2 class='text-center'>Inicia Sesión</h2>
-    <form class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto' action="{% url "perfil" %}" method="post">
+    <form class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto' action="{% url "login" %}" method="post">
         {% csrf_token %}
         <div class="input-group my-2">
             <span class="input-group-text">@</span>
             <div class="form-floating">
-            <input type="text" class="form-control" id="floatingInputGroup1" placeholder="Username">
+            <input name='username' type="text" class="form-control" id="floatingInputGroup1" placeholder="Username">
             <label for="floatingInputGroup1">Username</label>
             </div>
         </div>
         <div class="input-group my-2">
             <span class="input-group-text">#</span>
             <div class="form-floating">
-            <input type="password" class="form-control" id="floatingPassword" placeholder="Password">
+            <input name='password' type="password" class="form-control" id="floatingPassword" placeholder="Password">
             <label for="floatingPassword">Password</label>
             </div>
         </div>
         <button type="submit" class='btn btn-primary col-12'>Entrar</button>
+        <div class="text-center form-text">O si aún no estás registrado <a href="{% url "crear_usuario" %}" class="btn-primary">haz click aquí</a></div>
     </form>
 </div>
 {% endblock content %}
