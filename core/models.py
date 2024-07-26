@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserModel
 
 # Create your models here.
 class Usuario(models.Model):
@@ -17,7 +18,7 @@ class Usuario(models.Model):
     tipo_usuario = models.CharField(max_length=12, choices=TIPO_USUARIO)
 
     def __str__(self) -> str:
-        return f'{self.tipo_usuario}: {self.nombre} {self.apellido}'
+        return f'{self.rut} {self.nombre} {self.apellido}: {self.tipo_usuario}'
     
     class Meta:
         ordering = ['rut']
@@ -44,11 +45,12 @@ class Inmueble(models.Model):
     tipo_inmueble = models.CharField(choices=TIPO_INMUEBLE, max_length=20)
     precio_arriendo = models.IntegerField()
     disponible = models.BooleanField()
-    solicitudes = models.JSONField()
-    arrendatario = models.OneToOneField(Usuario, blank=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
+    solicitudes = models.JSONField(null=True, blank=True)
+    arrendatario = models.OneToOneField(Usuario, null=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
 
     def __str__(self) -> str:
-        return f'{self.tipo_inmueble}: {self.nombre} {self.precio_arriendo} - {self.disponible}'
+        estado = 'DISPONIBLE' if self.disponible == True else 'NO DISPONIBLE'
+        return f'{self.id} {self.tipo_inmueble} ({estado}) ubicado en: {self.comuna.nombre_comuna} | (Dueño: {self.propietario.nombre})'
     
     class Meta:
         ordering = ['tipo_inmueble']

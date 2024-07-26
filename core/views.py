@@ -1,48 +1,52 @@
 from django.shortcuts import render, redirect
-from django.http import HttpRequest
+from django.http import HttpResponse
 from .models import Usuario, Comuna, Inmueble
 from .utilities import cleaned_data
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
 
 # Create your views here.
+def index(request):
+    return redirect('crear_usuario')
+
 
 # a. lograr registrarse en la app
-@login_required
-def crear_user(request):
-    if request.method == 'POST':
-        # método para crear un usuario de django
-        user = User.objects.create(
-            username = request.POST['username'],
-            password = request.POST['password']
-        )
-        #data = cleaned_data(request.POST)
-        #User.objects.create(**data)
-        Usuario.objects.create(
-             user = user,
-             rut = request.POST['rut'],
-        )
-        return redirect('exito')
+def crear_usuario(request):
+    if request.method == 'GET':
+        return render(request, 'crear_usuario.html')
     else:
-        return render(request, 'crear_user.html')
+        # método para crear un usuario de django
+        if request.POST['password'] == request.POST['password_repeat']:
+            user = User.objects.create_user(
+                username = request.POST['username'],
+                password = request.POST['password'],
+            )
+            # el usuario de django creado es parte del modelo "Usuario" con los campos faltantes vacíos
+            Usuario.objects.create(
+                user = user,
+                rut = request.POST['rut'],
+            )
+            return redirect('exito')
+        else:
+            return HttpResponse('Contraseñas no coinciden, intentelo de nuevo')
 
 
 def exito(request):
     return render(request, 'exito.html')
+
 
 # b. actualizar sus datos
 # c. poder identificarse como arrendatario o como arrendador
 @login_required
 def actualizar_user(request):
     user = request.user
-    usuario = Usuario.objects.filter(user = user)
+    usuario = Usuario.objects.get(user = user)
     if request.method == 'POST':
         data = cleaned_data(request.POST) | {'user':user}
         usuario.update(**data)
         return redirect('perfil')
     else:
         return render(request, 'perfil.html', {'usuario' : usuario})
-
 
 
 def inmueble_comuna(request):

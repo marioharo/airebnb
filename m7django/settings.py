@@ -132,3 +132,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# para cambiar las rutas por defecto de la autenficacion de django
+LOGIN_REDIRECT_URL = 'perfil' # al iniciar sesión muestra este endpoint
+LOGOUT_REDIRECT_URL = '' # al cerrar sesión se redirige al endpoint home
