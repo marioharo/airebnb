@@ -49,10 +49,10 @@ def actualizar_usuario(request):
     user = request.user
     usuario = Usuario.objects.filter(user = user)
     if request.method == 'GET':
-        usuario_nombre = Usuario.objects.get(user = user)
+        usuario_get = Usuario.objects.get(user = user)
         context = {
             'usuario' : usuario,
-            'usuario_nombre' : usuario_nombre,
+            'usuario_get' : usuario_get,
             }
         return render(request, 'actualizar_usuario.html', context)
     else:

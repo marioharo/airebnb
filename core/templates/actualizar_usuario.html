@@ -1,16 +1,20 @@
 {% extends "base.html" %}
 {% block content %}
 <div class="container">
-<h2 class='text-center'>Actualizar datos de {{usuario_nombre.nombre}}</h2>
+<h2 class='text-center'>Actualizar datos de {{usuario_get.nombre}}</h2>
     <form class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto' action='' method="post">
         {% csrf_token %}
         <div class="my-3">
+        <label class="form-label">Tipo de usuario</label>
+          <input value="{{usuario_get.tipo_usuario}}" type="text" class="form-control" disabled>
+        </div>
+        <div class="my-3">
           <label class="form-label">Nombre</label>
-          <input name='nombre' value="{{usuario.nombre}}" type="text" class="form-control" placeholder='Ingresa un nuevo nombre' required>
+          <input name='nombre' value="{{usuario.nombre}}" type="text" class="form-control" placeholder='{{usuario_get.nombre}}' required>
         </div>
         <div class="my-3">
           <label class="form-label">Apellido</label>
-          <input name='apellido' value="{{usuario.apellido}}" type="text" class="form-control" placeholder='Ingresa un nuevo apellido' required>
+          <input name='apellido' value="{{usuario.apellido}}" type="text" class="form-control" placeholder='{{usuario_get.apellido}}' required>
         </div>
         <!--<div class="my-3">
           <label class="form-label">Rut</label>
@@ -18,15 +22,15 @@
         </div>-->
         <div class="my-3">
           <label class="form-label">Dirección</label>
-          <input name='direccion' value="{{usuario.direccion}}" type="text" class="form-control">
+          <input name='direccion' value="{{usuario.direccion}}" type="text" class="form-control" placeholder='{{usuario_get.direccion}}'>
         </div>
         <div class="my-3">
           <label class="form-label">Teléfono personal</label>
-          <input name='telefono_personal' value="{{usuario.telefono_personal}}" type="text" class="form-control" maxlength='9'>
+          <input name='telefono_personal' value="{{usuario.telefono_personal}}" type="text" class="form-control" placeholder='{{usuario_get.telefono_personal}}' maxlength='9'>
         </div>
         <div class="my-3">
           <label class="form-label">Correo electrónico</label>
-          <input name='correo_electronico' value="{{usuario.correo_electronico}}" type="text" class="form-control">
+          <input name='correo_electronico' value="{{usuario.correo_electronico}}" type="text" class="form-control" placeholder='{{usuario_get.correo_electronico}}'>
         </div>
         <!--<div class="my-3">
           <label class="form-label">Cambia tu contraseña</label>
