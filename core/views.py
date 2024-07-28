@@ -18,7 +18,7 @@ def crear_usuario(request):
         # método para crear un usuario de django
         if request.POST['password'] != request.POST['password_repeat']:
             # raise forms.ValidationError('contraseñas no coinciden')
-            return HttpResponse('contraseñas no coinciden')
+            return HttpResponse('contraseñas no coinciden, <a href="/crear_usuario">volver</a>')
         else:
             user = User.objects.create_user(
                 username = request.POST['username'],

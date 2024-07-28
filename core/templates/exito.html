@@ -1,5 +1,9 @@
+{% extends "base.html" %}
+{% block title %}Creación exitosa{% endblock title %}
 {% block content %}
-<h2>Usuario creado con éxito</h2>
-<a href="{% url "actualizar_usuario" %}" class='btn'>Completa tus datos de registro</a>
+<h2 class='text-center'>Usuario creado con éxito</h2>
+<div class="text-center">
+    <a href="{% url "actualizar_usuario" %}" class='btn btn-primary'>Completa tus datos de registro</a>
+</div>
 <div class="text-center form-text"><a href="{% url "perfil" %}" class="btn-primary">Ir a mi perfil</a></div>
 {% endblock content %}
