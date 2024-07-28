@@ -1,1 +1,5 @@
-<h2>Registro satisfactorio</h2>
+{% block content %}
+<h2>Usuario creado con éxito</h2>
+<a href="{% url "actualizar_usuario" %}" class='btn'>Completa tus datos de registro</a>
+<div class="text-center form-text"><a href="{% url "perfil" %}" class="btn-primary">Ir a mi perfil</a></div>
+{% endblock content %}

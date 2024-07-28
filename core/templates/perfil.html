@@ -1,4 +1,29 @@
 {% extends "base.html" %}
 {% block content %}
-<h1>Este es el perfil</h1>
+<div class="container">
+    <h2 class='text-center'>Perfil de: <span>{{ usuario.nombre }} {{ usuario.apellido}}</span></h2>
+    <div class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto'>
+        <div class="text-center form-text">Si quieres actualizar tus datos <a href="{% url "actualizar_usuario" %}" class="btn-primary">click aquí</a></div>
+        <div class="mb-3">
+            <label class="form-label">Rut</label>
+            <input class="form-control" type="text" value="{{ usuario.rut }}" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Dirección</label>
+            <input class="form-control" type="text" value="{{ usuario.direccion }}" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Teléfono personal</label>
+            <input class="form-control" type="text" value="{{ usuario.telefono_personal }}" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">Correo electrónico</label>
+            <input class="form-control" type="text" value="{{ usuario.correo_electronico }}" disabled>
+        </div>
+        <div class="mb-3">
+            <label class="form-label">tipo de usuario</label>
+            <input class="form-control" type="text" value="{{ usuario.tipo_usuario }}" disabled>
+        </div>
+    </div>
+</div>
 {% endblock content %}

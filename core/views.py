@@ -1,5 +1,6 @@
 from django.shortcuts import render, redirect
 from django.http import HttpResponse
+#from django.forms import forms
 from .models import Usuario, Comuna, Inmueble
 from .utilities import cleaned_data
 from django.contrib.auth.models import User
@@ -15,7 +16,10 @@ def crear_usuario(request):
         return render(request, 'crear_usuario.html')
     else:
         # método para crear un usuario de django
-        if request.POST['password'] == request.POST['password_repeat']:
+        if request.POST['password'] != request.POST['password_repeat']:
+            # raise forms.ValidationError('contraseñas no coinciden')
+            return HttpResponse('contraseñas no coinciden')
+        else:
             user = User.objects.create_user(
                 username = request.POST['username'],
                 password = request.POST['password'],
@@ -26,29 +30,40 @@ def crear_usuario(request):
                 rut = request.POST['rut'],
             )
             return redirect('exito')
-        else:
-            return HttpResponse('Contraseñas no coinciden, intentelo de nuevo')
+            
 
-
+@login_required
 def exito(request):
     return render(request, 'exito.html')
 
-
+@login_required
 def perfil(request):
-    return render(request, 'perfil.html', {})
+    user = request.user
+    usuario = usuario = Usuario.objects.get(user = user)
+    return render(request, 'perfil.html', {'usuario':usuario})
 
 # b. actualizar sus datos
 # c. poder identificarse como arrendatario o como arrendador
 @login_required
-def actualizar_user(request):
+def actualizar_usuario(request):
     user = request.user
-    usuario = Usuario.objects.get(user = user)
-    if request.method == 'POST':
+    usuario = Usuario.objects.filter(user = user)
+    if request.method == 'GET':
+        usuario_nombre = Usuario.objects.get(user = user)
+        context = {
+            'usuario' : usuario,
+            'usuario_nombre' : usuario_nombre,
+            }
+        return render(request, 'actualizar_usuario.html', context)
+    else:
+        # método para modificar un usuario
+        # if request.POST['password'] == request.POST['raw_password']:
+        #     User.set_password('password', 'raw_password')
+        # else:
+        #     return HttpResponse('contraseñas no coinciden')
         data = cleaned_data(request.POST) | {'user':user}
         usuario.update(**data)
         return redirect('perfil')
-    else:
-        return render(request, 'perfil.html', {'usuario' : usuario})
 
 
 def inmueble_comuna(request):

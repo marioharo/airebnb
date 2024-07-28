@@ -21,9 +21,10 @@ from core import views as core_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', core_views.index, name='index'),
-    path('perfil', core_views.perfil, name='perfil'),
     path('crear_usuario', core_views.crear_usuario, name='crear_usuario'),
     path('exito/', core_views.exito, name='exito'),
-    
     path('accounts/', include('django.contrib.auth.urls')), # vistas para el login
+    path('perfil', core_views.perfil, name='perfil'),
+    path('actualizar_usuario', core_views.actualizar_usuario, name='actualizar_usuario'),
+    
 ]
