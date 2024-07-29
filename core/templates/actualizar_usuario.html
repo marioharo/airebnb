@@ -5,7 +5,7 @@
 <h2 class='text-center'>Actualizar datos de {{usuario_get.nombre}}</h2>
     <form class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto' action='' method="post">
         {% csrf_token %}
-        <div class="my-3">
+        <div class="my-2">
         <label class="form-label">Tipo de usuario</label>
           <input value="{{usuario_get.tipo_usuario}}" type="text" class="form-control" disabled>
         </div>
@@ -41,9 +41,10 @@
             <label class="form-label">Repita la contraseña</label>
             <input name='raw_password' type="password" class="form-control">
         </div>-->
-        
-        <a href="{% url 'perfil' %}" class="btn btn-danger my-2 col-3">Cancelar</a>
-        <button type="submit" class="btn btn-primary my-2 col-8">Guardar cambios</button>
+        <div class="row justify-content-between">
+          <a href="{% url 'perfil' %}" class="btn btn-danger col-3">Cancelar</a>
+          <button type="submit" class="btn btn-primary col-8">Guardar cambios</button>
+        </div>
     </form>
 </div>
 {% endblock content %}

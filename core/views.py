@@ -39,16 +39,27 @@ def exito(request):
 @login_required
 def perfil(request):
     user = request.user
+    # data de usuario
     usuario = usuario = Usuario.objects.get(user = user)
-    return render(request, 'perfil.html', {'usuario':usuario})
+    # data de inmueble
+    inmuebles = Inmueble.objects.all()
+    #estado = 'DISPONIBLE' if inmuebles.disponible == True else 'NO DISPONIBLE'
+    context = {
+        'usuario':usuario,
+        'inmuebles' : inmuebles,
+     #   'estado':estado,
+        }
+    return render(request, 'perfil.html', context)
 
 # b. actualizar sus datos
 # c. poder identificarse como arrendatario o como arrendador
 @login_required
 def actualizar_usuario(request):
     user = request.user
+    # data de usuario
     usuario = Usuario.objects.filter(user = user)
     if request.method == 'GET':
+        # data de un único usuario
         usuario_get = Usuario.objects.get(user = user)
         context = {
             'usuario' : usuario,
