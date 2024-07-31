@@ -4,8 +4,10 @@ input:focus::placeholder {
   }
 
 /*ICONS*/
-.bi-person-fill-add,
+.bi-door-open,
+.bi-person-bounding-box,
 .bi-person-circle,
+.bi-person-fill-add,
 .bi-house-add-fill{
   color: gray;
   font-size: 35px;

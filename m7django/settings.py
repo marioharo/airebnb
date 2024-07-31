@@ -135,4 +135,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # para cambiar las rutas por defecto de la autenficacion de django
 LOGIN_REDIRECT_URL = '/perfil' # al iniciar sesión muestra el endpoint 'perfil'
-LOGOUT_REDIRECT_URL = '/' # al cerrar sesión se redirige al endpoint 'index'
+LOGOUT_REDIRECT_URL = '../login/' # al cerrar sesión se redirige al endpoint 'index'

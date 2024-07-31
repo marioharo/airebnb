@@ -49,7 +49,7 @@ class Inmueble(models.Model):
     arrendatario = models.OneToOneField(Usuario, null=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
 
     def __str__(self) -> str:
-        estado = 'DISPONIBLE' if self.disponible == True else 'NO DISPONIBLE'
+        estado = 'Disponible' if self.disponible == True else 'No Disponible'
         return f'{self.id} {self.tipo_inmueble} ({estado}) ubicado en: {self.comuna.nombre_comuna} | (Dueño: {self.propietario.nombre})'
     
     class Meta:
@@ -61,6 +61,7 @@ class Inmueble(models.Model):
 class Comuna(models.Model):
     nombre_comuna = models.CharField(max_length=50)
     region = models.CharField(max_length=50)
+    
 
     def __str__(self) -> str:
         return f'{self.id} {self.region}: {self.nombre_comuna}'

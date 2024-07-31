@@ -3,7 +3,7 @@
 {% block content %}
 <div class="container">
     <div class="row">
-        <div class='col-3'>
+        <div class='col-lg-3 col-12 mb-lg-0 mb-4'>
             <h2 class='text-center'>Perfil de: <span>{{ usuario.nombre }} {{ usuario.apellido}}</span></h2>
             <div class="mb-3">
                 <label class="form-label">tipo de usuario</label>
@@ -28,7 +28,7 @@
             <div class="text-center form-text">Si quieres actualizar tus datos <a href="{% url "actualizar_usuario" %}" class="btn-primary">click aquí</a></div>
         </div>
 
-        <div class="col-9">
+        <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             <h2 class='text-center'>Lista de inmuebles</span></h2>
             <table class="table table-hover">
                 <thead>
@@ -38,9 +38,10 @@
                     <!--<th scope="col">Nombre</th>-->
                     <th scope="col">Dirección</th>
                     <th scope="col">Comuna</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Estado</th>
-                    <th scope="col">Arrendatario</th>
+                    <th scope="col" class="text-center">Precio</th>
+                    <th scope="col" class="text-center">Estado</th>
+                    <th scope="col" class="text-center">Arrendatario</th>
+                    <th scope="col" class="text-center">Editar</th>
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -51,9 +52,10 @@
                             <!--<td>{{ inmueble.nombre }}</td>-->
                             <td>{{ inmueble.direccion }}</td>
                             <td>{{ inmueble.comuna.nombre_comuna }}</td>
-                            <td>{{ inmueble.precio_arriendo }}</td>
-                            <td>{{ estado }}</td>
-                            <td>{{ inmueble.arrendatario.nombre }}</td>
+                            <td class="text-center">{{ inmueble.precio_arriendo }}</td>
+                            <td class="text-center">{{ estado }}</td>
+                            <td class="text-center">{{ inmueble.arrendatario.nombre }}</td>
+                            <td class="text-center"><a href="{% url 'editar_inmueble' %}"><i class="bi bi-pencil-square"></i></a></td>
                         </tr>
                     {% endfor %}
                 </tbody>

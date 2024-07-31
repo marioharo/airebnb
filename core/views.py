@@ -8,12 +8,37 @@ from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 def index(request):
-    return redirect('crear_usuario')
+    return redirect('login')
+
+
+@login_required
+def perfil(request):
+    # data de usuario
+    user = request.user
+    usuario = usuario = Usuario.objects.get(user = user)
+    # data de inmueble cuando el usuario es arrendador
+    if usuario.tipo_usuario == 'arrendador':
+        inmuebles = Inmueble.objects.filter(propietario = usuario)
+        for inmueble in inmuebles:
+            estado = 'Disponible' if inmueble.disponible == True else 'No Disponible'
+        context = {
+            'usuario': usuario,
+            'inmuebles' : inmuebles,
+            'estado' : estado,
+            }
+    else:
+        context = {'usuario' : usuario}
+    return render(request, 'perfil.html', context)
+
 
 # a. lograr registrarse en la app
 def crear_usuario(request):
     if request.method == 'GET':
-        return render(request, 'crear_usuario.html')
+        # data de usuario
+        user = request.user
+        #usuario = usuario = Usuario.objects.get(user = user)
+        context = {'user':user}
+        return render(request, 'crear_usuario.html', context)
     else:
         # método para crear un usuario de django
         if request.POST['password'] != request.POST['password_repeat']:
@@ -36,20 +61,6 @@ def crear_usuario(request):
 def exito(request):
     return render(request, 'exito.html')
 
-@login_required
-def perfil(request):
-    user = request.user
-    # data de usuario
-    usuario = usuario = Usuario.objects.get(user = user)
-    # data de inmueble
-    inmuebles = Inmueble.objects.all()
-    #estado = 'DISPONIBLE' if inmuebles.disponible == True else 'NO DISPONIBLE'
-    context = {
-        'usuario':usuario,
-        'inmuebles' : inmuebles,
-     #   'estado':estado,
-        }
-    return render(request, 'perfil.html', context)
 
 # b. actualizar sus datos
 # c. poder identificarse como arrendatario o como arrendador
@@ -91,7 +102,7 @@ def inmueble_comuna(request):
             return render(request, 'listar_propiedades.html', {'comunas' : comunas})
     else:
         return redirect('perfil')
-    
+
 
 def solicitud_arriendo(request, id):
     inmueble = Inmueble.objects.filter(id = id)
@@ -107,14 +118,24 @@ def solicitud_arriendo(request, id):
 # a. Publicar sus propiedades en una comuna determinada con sus características.
 @login_required
 def crear_inmueble(request):
+    user = request.user
     if request.method == 'POST':
-        user = request.user
-        comuna = Comuna.objects.get(comuna = request.POST['comuna'])
-        data = cleaned_data(request.POST) | {'propietario':user, 'comuna':comuna}
+        # instancia de usuario
+        usuario = Usuario.objects.get(user = user)
+        comuna = Comuna.objects.get(id=request.POST['comuna'])
+        data = cleaned_data(request.POST) | {'propietario':usuario, 'comuna':comuna}
         Inmueble.objects.create(**data)
-        return redirect('crear_inmueble')
+        return redirect('perfil')
     else:
-        return render(request, 'crear_inmueble')
+        # data de comunas
+        comunas = Comuna.objects.all()
+        # data de usuario
+        usuario = usuario = Usuario.objects.get(user = user)
+        context = {
+            'usuario':usuario,
+            'comunas':comunas,
+            }
+        return render(request, 'crear_inmueble.html', context)
     
 
 # b. Listar propiedades en el dashboard
