@@ -27,6 +27,7 @@ urlpatterns = [
     path('exito/', core_views.exito, name='exito'),
     path('actualizar_usuario', core_views.actualizar_usuario, name='actualizar_usuario'),
     path('crear_inmueble', core_views.crear_inmueble, name='crear_inmueble'),
-    path('editar_inmueble', core_views.editar_inmueble, name='editar_inmueble'),
+    path('editar_inmueble/<id>', core_views.editar_inmueble, name='editar_inmueble'),
+    path('eliminar_inmueble/<id>', core_views.eliminar_inmueble, name='eliminar_inmueble'),
     
 ]

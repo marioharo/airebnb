@@ -1,1 +1,19 @@
-editar inmueble
+{% extends "base.html" %}
+{% block title %}Editar Inmueble{% endblock title %}
+{% block content %}
+<div class="container">
+<h2 class='text-center'>Actualizar datos de {{inmueble.tipo_inmueble}}</h2>
+    <form class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto' action='' method="post">
+        {% csrf_token %}
+        <div class="my-2">
+        <label class="form-label">Tipo de usuario</label>
+          <input value="{{usuario_get.tipo_usuario}}" type="text" class="form-control" disabled>
+        </div>
+        
+        <div class="row justify-content-between">
+          <a href="{% url 'perfil' %}" class="btn btn-danger col-3">Cancelar</a>
+          <button type="submit" class="btn btn-primary col-8">Guardar cambios</button>
+        </div>
+    </form>
+</div>
+{% endblock content %}

@@ -66,8 +66,8 @@ def exito(request):
 # c. poder identificarse como arrendatario o como arrendador
 @login_required
 def actualizar_usuario(request):
-    user = request.user
     # data de usuario
+    user = request.user
     usuario = Usuario.objects.filter(user = user)
     if request.method == 'GET':
         # data de un único usuario
@@ -86,6 +86,28 @@ def actualizar_usuario(request):
         data = cleaned_data(request.POST) | {'user':user}
         usuario.update(**data)
         return redirect('perfil')
+
+
+@login_required
+def editar_inmueble(request, id):
+    # data de usuario
+    user = request.user
+    usuario = Usuario.objects.filter(user = user)
+    if request.method == 'GET':
+        inmueble = Inmueble.objects.get(id = id)
+        context = {'inmueble':inmueble}
+        return render(request, 'editar_inmueble.html', context)
+    else:
+        pk = request.POST['id']
+        comuna = Comuna.objects.get(id=request.POST['comuna'])
+        data = cleaned_data(request.POST) | {'comuna':comuna}
+        inmueble = Inmueble.objects.filter(id = pk)
+        inmueble.update(**data)
+        return redirect('perfil')
+    # comuna = Comuna.objects.get(comuna = request.POST['comuna'])
+    # data = cleaned_data(request.POST) | {'comuna':comuna}
+    # Inmueble.objects.filter(id = id).update(**data)
+    # return redirect('perfil')
 
 
 def inmueble_comuna(request):
@@ -150,15 +172,7 @@ def listar_inmueble(request):
 @login_required
 def eliminar_inmueble(request, id):
     Inmueble.objects.get(id = id).delete()
-    return redirect('listar_inmuebles')
-
-
-@login_required
-def editar_inmueble(request, id):
-    comuna = Comuna.objects.get(comuna = request.POST['comuna'])
-    data = cleaned_data(request.POST) | {'comuna':comuna}
-    Inmueble.objects.filter(id = id).update(**data)
-    return redirect('listar_inmuebles')
+    return redirect('perfil')
 
 
 # d. Aceptar arrendatarios.

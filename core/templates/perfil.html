@@ -33,15 +33,16 @@
             <table class="table table-hover">
                 <thead>
                   <tr>
-                    <th scope="col">#</th>
-                    <th scope="col">Tipo</th>
-                    <!--<th scope="col">Nombre</th>-->
-                    <th scope="col">Dirección</th>
-                    <th scope="col">Comuna</th>
-                    <th scope="col" class="text-center">Precio</th>
-                    <th scope="col" class="text-center">Estado</th>
-                    <th scope="col" class="text-center">Arrendatario</th>
-                    <th scope="col" class="text-center">Editar</th>
+                    <th>#</th>
+                    <th>Tipo</th>
+                    <!--<th>Nombre</th>-->
+                    <th>Dirección</th>
+                    <th>Comuna</th>
+                    <th class="text-center">Precio</th>
+                    <th class="text-center">Estado</th>
+                    <th class="text-center">Arrendatario</th>
+                    <th class="text-center">Editar</th>
+                    <th class="text-center">Borrar</th>
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -55,8 +56,27 @@
                             <td class="text-center">{{ inmueble.precio_arriendo }}</td>
                             <td class="text-center">{{ estado }}</td>
                             <td class="text-center">{{ inmueble.arrendatario.nombre }}</td>
-                            <td class="text-center"><a href="{% url 'editar_inmueble' %}"><i class="bi bi-pencil-square"></i></a></td>
+                            <td class="text-center"><a href="editar_inmueble/{{ inmueble.id }}"><i class="bi bi-pencil-square"></i></a></td>
+                            <td class="text-center"><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{ forloop.counter }}"><i class="bi bi-trash"></i></a></td>
                         </tr>
+                        <!--agregar modal-->
+                        <div class="modal fade" id="exampleModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered">
+                              <div class="modal-content">
+                                <div class="modal-header">
+                                  <h5 class="modal-title text-center"><i class="bi bi-exclamation-triangle"></i> Estás seguro de eliminar?</h5>
+                                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                  <h5>{{ inmueble.nombre }} ({{ inmueble.tipo_inmueble }})</h5>
+                                </div>
+                                <div class="modal-footer">
+                                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                  <a href="eliminar_inmueble/{{ inmueble.id }}"><button type="button" class="btn btn-danger">Si, eliminar</button></a>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                     {% endfor %}
                 </tbody>
               </table>

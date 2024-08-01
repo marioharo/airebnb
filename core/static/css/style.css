@@ -12,3 +12,6 @@ input:focus::placeholder {
   color: gray;
   font-size: 35px;
 }
+.bi-exclamation-triangle{
+  color:yellow;
+}
