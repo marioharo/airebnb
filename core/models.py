@@ -53,7 +53,7 @@ class Inmueble(models.Model):
         return f'{self.id} {self.tipo_inmueble} ({estado}) ubicado en: {self.comuna.nombre_comuna} | (Dueño: {self.propietario.nombre})'
     
     class Meta:
-        ordering = ['tipo_inmueble']
+        ordering = ['id']
         db_table = 'inmueble'
         verbose_name_plural = 'inmuebles'
 
@@ -67,6 +67,6 @@ class Comuna(models.Model):
         return f'{self.id} {self.region}: {self.nombre_comuna}'
     
     class Meta:
-        #ordering = ['region']
+        #ordering = ['id']
         db_table = 'comuna'
         verbose_name_plural = 'comunas'

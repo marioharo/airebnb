@@ -1,5 +1,6 @@
 /*para hacer desaparecer el placeholder*/
-input:focus::placeholder {
+input:focus::placeholder,
+textarea:focus::placeholder{
     color: transparent;
   }
 

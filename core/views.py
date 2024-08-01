@@ -70,7 +70,7 @@ def actualizar_usuario(request):
     user = request.user
     usuario = Usuario.objects.filter(user = user)
     if request.method == 'GET':
-        # data de un único usuario
+        # data de un único usuario para mostrar el nombre en el título
         usuario_get = Usuario.objects.get(user = user)
         context = {
             'usuario' : usuario,
@@ -94,20 +94,22 @@ def editar_inmueble(request, id):
     user = request.user
     usuario = Usuario.objects.filter(user = user)
     if request.method == 'GET':
-        inmueble = Inmueble.objects.get(id = id)
-        context = {'inmueble':inmueble}
+        comunas = Comuna.objects.all()
+        inmueble = Inmueble.objects.filter(id = id)
+        # data de un único inmueble para mostrar el nombre en el título
+        inmueble_get = Inmueble.objects.get(id = id)
+        context = {
+            'inmueble':inmueble,
+            'inmueble_get':inmueble_get,
+            'comunas':comunas,
+            }
         return render(request, 'editar_inmueble.html', context)
     else:
         pk = request.POST['id']
-        comuna = Comuna.objects.get(id=request.POST['comuna'])
-        data = cleaned_data(request.POST) | {'comuna':comuna}
         inmueble = Inmueble.objects.filter(id = pk)
+        data = cleaned_data(request.POST)
         inmueble.update(**data)
-        return redirect('perfil')
-    # comuna = Comuna.objects.get(comuna = request.POST['comuna'])
-    # data = cleaned_data(request.POST) | {'comuna':comuna}
-    # Inmueble.objects.filter(id = id).update(**data)
-    # return redirect('perfil')
+    return redirect('perfil')
 
 
 def inmueble_comuna(request):

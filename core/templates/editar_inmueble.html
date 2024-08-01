@@ -2,14 +2,75 @@
 {% block title %}Editar Inmueble{% endblock title %}
 {% block content %}
 <div class="container">
-<h2 class='text-center'>Actualizar datos de {{inmueble.tipo_inmueble}}</h2>
+<h2 class='text-center'>Editar datos de {{inmueble_get.nombre}}</h2>
     <form class='col-8 col-md-7 col-lg-6 col-xl-5 mx-auto' action='' method="post">
         {% csrf_token %}
+        <input name="id" value="{{inmueble_get.id}}" type="text" hidden>
         <div class="my-2">
-        <label class="form-label">Tipo de usuario</label>
-          <input value="{{usuario_get.tipo_usuario}}" type="text" class="form-control" disabled>
+          <label class="form-label">Tipo de inmueble</label>
+          <select name="tipo_inmueble" class="form-select form-select-sm">
+            <option selected>Selecciona...</option>
+            <option value="casa">Casa</option>
+            <option value="departamento">Departamento</option>
+            <option value="parcela">Parcela</option>
+          </select>
         </div>
-        
+        <div class="my-3">
+          <label class="form-label">Nombre de inmueble</label>
+          <input name="nombre" value="{{inmueble.nombre}}" type="text" class="form-control" placeholder="{{inmueble_get.nombre}}" required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">Dirección</label>
+          <input name='direccion' value="{{inmueble.direccion}}" type="text" class="form-control" placeholder='{{inmueble_get.direccion}}' required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">Comuna</label>
+          <select name="comuna" class="form-select form-select-sm">
+            <option selected>Selecciona comuna...</option>
+            {% for comuna in comunas %}
+                <option value="{{ comuna.id }}">{{ comuna.nombre_comuna }}</option>
+            {% endfor %}
+        </select>
+        </div>
+        <div class="my-3">
+          <label class="form-label">M2 construidos</label>
+          <input name='m2_construidos' value="{{inmueble.m2_construidos}}" type="text" class="form-control" maxlength='4' placeholder="{{inmueble_get.m2_construidos}}" required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">M2 totales</label>
+          <input name='m2_totales' value="{{inmueble.m2_totales}}" type="text" class="form-control" maxlength='4' required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">Cantidad de habitaciones</label>
+          <input name='cantidad_habitaciones' value="{{inmueble.cantidad_habitaciones}}" type="text" class="form-control" maxlength='2' required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">Cantidad de baños</label>
+          <input name='cantidad_banos' value="{{inmueble.cantidad_banos}}" type="text" class="form-control" maxlength='1' required>
+        </div>
+        <div class="my-3">
+          <label class="form-label">Cantidad de estacionamientos</label>
+          <input name='cantidad_estacionamientos' value="{{inmueble.cantidad_estacionamientos}}" type="text" class="form-control" maxlength='2' required>
+        </div>
+        <div class="input-group my-3">
+            <span class="input-group-text">$</span>
+            <div class="form-floating">
+                <input name='precio_arriendo' value="{{inmueble.precio_arriendo}}" type="text" class="form-control" maxlength='7' id="floatingPrecio" placeholder="" required>
+                <label for="floatingPrecio">Precio</label>
+            </div>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="disponible" id="exampleRadios1" value="True" checked>
+            <label class="form-check-label" for="exampleRadios1">Disponible</label>
+          </div>
+          <div class="form-check">
+            <input class="form-check-input" type="radio" name="disponible" id="exampleRadios2" value="False">
+            <label class="form-check-label" for="exampleRadios2">No Disponible</label>
+          </div>
+        <div class="my-3">
+          <label class="form-label">Descripción</label>
+          <textarea name='descripcion' value="{{inmueble.descripcion}}" class="form-control" rows="5" placeholder="{{inmueble_get.descripcion}}"></textarea>
+        </div>
         <div class="row justify-content-between">
           <a href="{% url 'perfil' %}" class="btn btn-danger col-3">Cancelar</a>
           <button type="submit" class="btn btn-primary col-8">Guardar cambios</button>
