@@ -49,8 +49,8 @@ class Inmueble(models.Model):
     arrendatario = models.OneToOneField(Usuario, null=True, on_delete=models.DO_NOTHING, related_name='arrendatario')
 
     def __str__(self) -> str:
-        estado = 'Disponible' if self.disponible == True else 'No Disponible'
-        return f'{self.id} {self.tipo_inmueble} ({estado}) ubicado en: {self.comuna.nombre_comuna} | (Dueño: {self.propietario.nombre})'
+        self.disponible = 'Disponible' if self.disponible == True else 'No Disponible'
+        return f'{self.id} {self.nombre} ({self.disponible}) ubicado en: {self.comuna.nombre_comuna} | (Dueño: {self.propietario.nombre})'
     
     class Meta:
         ordering = ['id']

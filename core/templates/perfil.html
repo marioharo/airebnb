@@ -29,7 +29,11 @@
         </div>
 
         <div class="col-lg-9 col-12 mb-lg-0 mb-3">
-            <h2 class='text-center'>Lista de inmuebles</span></h2>
+            {%if usuario.tipo_usuario == "arrendador"%}
+            <h2 class='text-center'>Tu lista de propiedades</h2>
+            {% else %}
+            <h2 class='text-center'>Tu lista de arriendos</h2>
+            {% endif %}
             <table class="table table-hover">
                 <thead>
                   <tr>
@@ -40,9 +44,13 @@
                     <th>Comuna</th>
                     <th class="text-center">Precio</th>
                     <th class="text-center">Estado</th>
+                    {%if usuario.tipo_usuario == "arrendador"%}
                     <th class="text-center">Arrendatario</th>
                     <th class="text-center">Editar</th>
                     <th class="text-center">Borrar</th>
+                    {% else %}
+                    <th class="text-center">Dar de baja</th>
+                    {% endif %}
                   </tr>
                 </thead>
                 <tbody class="table-group-divider">
@@ -54,10 +62,14 @@
                             <td>{{ inmueble.direccion }}</td>
                             <td>{{ inmueble.comuna.nombre_comuna }}</td>
                             <td class="text-center">{{ inmueble.precio_arriendo }}</td>
-                            <td class="text-center">{{ estado }}</td>
+                            <td class="text-center">{{ inmueble.disponible }}</td>
+                            {%if usuario.tipo_usuario == "arrendador"%}
                             <td class="text-center">{{ inmueble.arrendatario.nombre }}</td>
                             <td class="text-center"><a href="editar_inmueble/{{ inmueble.id }}"><i class="bi bi-pencil-square"></i></a></td>
                             <td class="text-center"><a href="" data-bs-toggle="modal" data-bs-target="#exampleModal{{ forloop.counter }}"><i class="bi bi-trash"></i></a></td>
+                            {% else %}
+                            <td class="text-center"><a href=""><i class="bi bi-eraser-fill"></i></a></td>
+                            {% endif %}
                         </tr>
                         <!--agregar modal-->
                         <div class="modal fade" id="exampleModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">

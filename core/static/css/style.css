@@ -9,7 +9,8 @@ textarea:focus::placeholder{
 .bi-person-bounding-box,
 .bi-person-circle,
 .bi-person-fill-add,
-.bi-house-add-fill{
+.bi-house-add-fill,
+.bi-search{
   color: gray;
   font-size: 35px;
 }

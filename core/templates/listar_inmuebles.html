@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block content %}
+<!--Inicio Cards-->
+<div class="container">
+    <div class="row row-cols-1 row-cols-lg-4 g-3 mb-5">
+    {% for inmueble in inmuebles %}
+        <div class="col">
+            <div class="card">
+                <!--<img class="card-img-top" src="{{ inmueble.img_url }}" alt="flan" />-->
+                <div class="card-body d-flex flex-column justify-content-between">
+                    <h4 class="card-title">
+                        {% if inmueble.tipo_inmueble == 'casa' %}
+                        <i class="bi bi-house"></i>
+                        {% elif inmueble.tipo_inmueble == 'departamento' %}
+                        <i class="bi bi-building"></i>
+                        {% else %}
+                        <i class="bi bi-tree"></i>
+                        {% endif %}
+                        {{ inmueble.nombre }}
+                    </h4>
+                    <p class="card-text">{{ inmueble.descripcion }}</p>
+                </div>
+                <blockquote class="blockquote-footer m-0">
+                    <i class="bi bi-geo-alt"></i> {{inmueble.direccion}} <cite>{{inmueble.comuna.nombre_comuna}}</cite>
+                </blockquote>
+                <div class="card-body">
+                    <h6 class="card-subtitle fs-4">
+                    $ {{ inmueble.precio_arriendo}}
+                    </h6>
+                    <form action="" method="post">
+                        {% csrf_token %}
+                        <input name="id" value="{{inmueble.id}}" type="text" hidden>
+                        <button type="submit" class="btn btn-success">Arrendar</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+    </div>
+</div>
+{% endblock content %}
