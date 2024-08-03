@@ -7,7 +7,7 @@
         {% csrf_token %}
         <div class="my-2">
         <label class="form-label">Tipo de usuario</label>
-          <input value="{{usuario_get.tipo_usuario}}" type="text" class="form-control" disabled>
+        <input type="text" class="form-control" placeholder='{{usuario_get.tipo_usuario}}' disabled>
         </div>
         <div class="my-3">
           <label class="form-label">Nombre</label>
@@ -27,7 +27,7 @@
         </div>
         <div class="my-3">
           <label class="form-label">Teléfono personal</label>
-          <input name='telefono_personal' value="{{usuario.telefono_personal}}" type="text" class="form-control" placeholder='{{usuario_get.telefono_personal}}' maxlength='9'>
+          <input name='telefono_personal' value="{{usuario.telefono_personal}}" type="text" class="form-control" placeholder='{{usuario_get.telefono_personal}}' maxlength='9' required >
         </div>
         <div class="my-3">
           <label class="form-label">Correo electrónico</label>

@@ -30,5 +30,8 @@ urlpatterns = [
     path('editar_inmueble/<id>', core_views.editar_inmueble, name='editar_inmueble'),
     path('eliminar_inmueble/<id>', core_views.eliminar_inmueble, name='eliminar_inmueble'),
     path('listar_inmuebles', core_views.listar_inmuebles, name="listar_inmuebles"),
+    path('buscar_inmuebles', core_views.buscar_inmuebles, name="buscar_inmuebles"),
+    path('fetch_data/<region>', core_views.fetch_data, name='fetch_data'),
+    path('solicitud_arriendo', core_views.solicitud_arriendo, name="solicitud_arriendo"),
     
 ]

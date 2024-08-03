@@ -1,23 +1,21 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 #from django.forms import forms
-from .models import Usuario, Comuna, Inmueble
-from .utilities import cleaned_data
 from django.contrib.auth.models import User
 from django.contrib.auth.decorators import login_required
+from .models import Usuario, Comuna, Inmueble
+from .utilities import cleaned_data
 
 # Create your views here.
 def index(request):
-    return redirect('listar_inmuebles')
+    return redirect('buscar_inmuebles')
 
 
 # a. lograr registrarse en la app
 def crear_usuario(request):
     """ Crea usuarios de 2 tipos que no pertenecen al staff de administradores """
+    user = request.user
     if request.method == 'GET':
-        # data de usuario
-        user = request.user
-        #usuario = usuario = Usuario.objects.get(user = user)
         context = {'user':user}
         return render(request, 'crear_usuario.html', context)
     else:
@@ -33,12 +31,13 @@ def crear_usuario(request):
             # el usuario de django creado es parte del modelo "Usuario" con los campos faltantes vacíos
             Usuario.objects.create(
                 user = user,
+                nombre = user.username,
                 rut = request.POST['rut'],
+                tipo_usuario = request.POST['tipo_usuario'],
             )
             return redirect('exito')
             
 
-@login_required
 def exito(request):
     return render(request, 'exito.html')
 
@@ -46,10 +45,8 @@ def exito(request):
 @login_required
 def perfil(request):
     """ Muestra el perfil tanto de arrendadores como arrendatarios """
-    # data de usuario
     user = request.user
     usuario = usuario = Usuario.objects.get(user = user)
-    # data de inmueble cuando el usuario es arrendador
     if usuario.tipo_usuario == 'arrendatario':
         inmuebles = Inmueble.objects.filter(arrendatario = usuario)
     else:
@@ -142,35 +139,67 @@ def listar_inmuebles(request):
     """Página principal donde se muestra la lista completa de inmuebles """
     user = request.user
     inmuebles = Inmueble.objects.all()
-    if request.method == 'GET':
-        return render(request, 'listar_inmuebles.html', {'inmuebles':inmuebles})
+    # Buscador de inmuebles filtrando por Región y comuna
+    comunas = set([comuna.region for comuna in Comuna.objects.all()])
+    #SI EL USER NO ESTÁ LOGEADO
+    if request.method == 'GET' and not request.user.is_authenticated:
+        context = {
+            'inmuebles':inmuebles,
+            'comunas':comunas,
+            }
+    #SI EL USER ESTÁ LOGEADO
+    elif request.method == 'GET' and request.user.is_authenticated:
+        usuario = Usuario.objects.get(user = user)
+        context = {
+            'usuario':usuario,
+            'inmuebles':inmuebles,
+            'comunas':comunas,
+            }
     else:
-        if request.user.is_authenticated:
-            # solicitudes de inmueble
+        return redirect('login')
+        
+    return render(request, 'listar_inmuebles.html', context)
+
+
+def buscar_inmuebles(request):
+    inmuebles = Inmueble.objects.all()
+    if request.method == 'GET':
+        regiones = set([comuna.region for comuna in Comuna.objects.all()])
+        #print(regiones)
+        context = {
+            'inmuebles':inmuebles,
+            'regiones':regiones
+        }
+        return render(request, 'buscar_inmuebles.html', context)
+    else:
+        comuna = Comuna.objects.filter(nombre_comuna = request.POST['comuna'])
+        for c in comuna:
+            inmuebles = Inmueble.objects.filter(comuna = c.id)
+            print(inmuebles)
+        context = {
+            'inmuebles':inmuebles,
+        }
+        return render(request, 'buscar_inmuebles.html', context)
+
+
+def fetch_data(request, region):
+    """Endpoint para ver la lista del buscador de inmuebles"""
+    comunas = Comuna.objects.filter(region = region)
+    #print(comunas)
+    return JsonResponse(list(comunas.values('nombre_comuna')), safe = False)
+
+
+@login_required
+def solicitud_arriendo(request):
+    """ Boton de solicitud de arriendo """
+    if request.method == 'POST' and request.user.is_authenticated:
+            user = request.user
             usuario = Usuario.objects.get(user = user)
             inmueble = Inmueble.objects.filter(id = request.POST['id'])
             inmueble.update(solicitudes = {f'{usuario.nombre}' : usuario.rut})
             return redirect('perfil')
-        else:
-            return redirect('login')
-
-
-def filtrar_lista_inmuebles(request, id):
-    """ Buscador de inmuebles filtrando por Región y comuna """
-    return redirect('listar_inmuebles')
-
-
-@login_required
-def solicitud_arriendo(request, id):
-    """ Boton de solicitud de arriendo """
-    if request.method == 'POST':
-        inmueble = Inmueble.objects.filter(id = id)
-        inmueble.update(
-            solicitudes = {
-                f'solicitud_{request.user.username}': request.user.id
-            }
-        )
-    return redirect('perfil')
+    else:
+        return redirect('/login/')
 
 
 # c. Eliminar y editar sus propiedades
@@ -195,19 +224,3 @@ def aceptar_arrendatarios(request):
         disponible = False,
     )
     return redirect('listar_inmuebles')
-
-
-def inmueble_comuna(request):
-    user = request.user
-    usuario = Usuario.objects.filter(user = user)
-    if Usuario.tipo_usuario == 'arrendatario':
-        if request.method == 'POST':
-            comuna = request.POST['comuna']
-            comuna = Comuna.objects.get(comuna = comuna)
-            inmuebles_comuna = Inmueble.objects.filter(comuna = comuna)
-            return render(request, 'inmueble_comuna.html', {'inmuebles_comuna' : inmuebles_comuna})
-        else:
-            comunas = Comuna.objects.all()
-            return render(request, 'listar_propiedades.html', {'comunas' : comunas})
-    else:
-        return redirect('perfil')

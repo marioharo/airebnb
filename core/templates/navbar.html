@@ -29,7 +29,7 @@
           </li>
           {% endif %}
           <li class="nav-item">
-            <a class="nav-link active" aria-current="page" href="{% url "listar_inmuebles" %}" title="Buscar">
+            <a class="nav-link active" aria-current="page" href="{% url "buscar_inmuebles" %}" title="Buscar">
               <i class="bi bi-search" data-bs-toggle="tooltip" data-bs-placement="bottom" data-bs-title="Buscar"></i>
             </a>
           </li>
@@ -38,15 +38,12 @@
         <a href="{% url "login" %}" class="btn btn-primary">Iniciar Sesión</a>
         {% endif %}
         {% if user.is_authenticated %}
+        <span class="nav-link mx-2">Hola {{user.username}}</span>
         <form action="{% url "logout" %}" method="post">
             {% csrf_token %}
             <button type="submit" class="btn btn-danger">Cerrar Sesión</button>
         </form>
         {% endif %}
-        <!--<form class="d-flex" role="search">
-          <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-          <button class="btn btn-outline-success" type="submit">Search</button>
-        </form>-->
       </div>
     </div>
   </nav>
