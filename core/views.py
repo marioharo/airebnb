@@ -135,30 +135,30 @@ def editar_inmueble(request, id):
 
 
 # b. Listar propiedades en el dashboard
-def listar_inmuebles(request):
-    """Página principal donde se muestra la lista completa de inmuebles """
-    user = request.user
-    inmuebles = Inmueble.objects.all()
-    # Buscador de inmuebles filtrando por Región y comuna
-    comunas = set([comuna.region for comuna in Comuna.objects.all()])
-    #SI EL USER NO ESTÁ LOGEADO
-    if request.method == 'GET' and not request.user.is_authenticated:
-        context = {
-            'inmuebles':inmuebles,
-            'comunas':comunas,
-            }
-    #SI EL USER ESTÁ LOGEADO
-    elif request.method == 'GET' and request.user.is_authenticated:
-        usuario = Usuario.objects.get(user = user)
-        context = {
-            'usuario':usuario,
-            'inmuebles':inmuebles,
-            'comunas':comunas,
-            }
-    else:
-        return redirect('login')
+# def listar_inmuebles(request):
+#     """Página principal donde se muestra la lista completa de inmuebles """
+#     user = request.user
+#     inmuebles = Inmueble.objects.all()
+#     # Buscador de inmuebles filtrando por Región y comuna
+#     comunas = set([comuna.region for comuna in Comuna.objects.all()])
+#     #SI EL USER NO ESTÁ LOGEADO
+#     if request.method == 'GET' and not request.user.is_authenticated:
+#         context = {
+#             'inmuebles':inmuebles,
+#             'comunas':comunas,
+#             }
+#     #SI EL USER ESTÁ LOGEADO
+#     elif request.method == 'GET' and request.user.is_authenticated:
+#         usuario = Usuario.objects.get(user = user)
+#         context = {
+#             'usuario':usuario,
+#             'inmuebles':inmuebles,
+#             'comunas':comunas,
+#             }
+#     else:
+#         return redirect('login')
         
-    return render(request, 'listar_inmuebles.html', context)
+#     return render(request, 'listar_inmuebles.html', context)
 
 
 def buscar_inmuebles(request):
@@ -224,3 +224,28 @@ def aceptar_arrendatarios(request):
         disponible = False,
     )
     return redirect('listar_inmuebles')
+
+
+def aceptar_solicitud(request):
+    if request.method == 'GET':
+        inmuebles = Inmueble.objects.all()
+        for inmueble in inmuebles:
+            inmueble.solicitudes
+        solicitudes = inmueble.solicitudes
+        for k,v in solicitudes.items():
+            k,v
+        context = {
+            'inmueble':inmueble,
+            'k':k,
+            'v':v,
+        }
+        return render(request, context)
+    else:
+        arrendatario = Usuario.objects.get(id = request.POST['arrendador_id'])
+        inmueble = Inmueble.objects.filter(id = request.POST['inmueble_id'])
+        inmueble.update(
+        solicitud_arriendo = '',
+        arrendatario = arrendatario,
+        disponible = False,
+        )
+        return redirect('perfil')

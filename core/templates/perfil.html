@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 {% block title %}Perfil de {{ usuario.nombre }}{% endblock title %}
 {% block content %}
+{% load static %}
 <div class="container">
     <div class="row">
         <div class='col-lg-3 col-12 mb-lg-0 mb-4'>
@@ -30,7 +31,7 @@
 
         <div class="col-lg-9 col-12 mb-lg-0 mb-3">
             {%if usuario.tipo_usuario == "arrendador"%}
-            <h2 class='text-center'>Tu lista de propiedades</h2>
+            <h2 class='text-start'>Tu lista de propiedades</h2>
             {% else %}
             <h2 class='text-center'>Tu lista de arriendos</h2>
             {% endif %}
@@ -62,7 +63,13 @@
                             <td>{{ inmueble.direccion }}</td>
                             <td>{{ inmueble.comuna.nombre_comuna }}</td>
                             <td class="text-center">{{ inmueble.precio_arriendo }}</td>
-                            <td class="text-center">{{ inmueble.disponible }}</td>
+                            <td class="text-center">
+                              {% if inmueble.disponible == True %}
+                                <img src="{% static 'img/success-check.png'%}" alt="disponible" width="20px">
+                              {% else %}
+                                <span>x</span>
+                              {% endif %}
+                            </td>
                             {%if usuario.tipo_usuario == "arrendador"%}
                             <td class="text-center">{{ inmueble.arrendatario.nombre }}</td>
                             <td class="text-center"><a href="editar_inmueble/{{ inmueble.id }}"><i class="bi bi-pencil-square"></i></a></td>
@@ -71,7 +78,7 @@
                             <td class="text-center"><a href=""><i class="bi bi-eraser-fill"></i></a></td>
                             {% endif %}
                         </tr>
-                        <!--agregar modal-->
+                        <!--modal-->
                         <div class="modal fade" id="exampleModal{{ forloop.counter }}" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog modal-dialog-centered">
                               <div class="modal-content">

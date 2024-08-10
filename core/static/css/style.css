@@ -1,3 +1,7 @@
+a{
+  text-decoration: none;
+  color: green;
+}
 /*para hacer desaparecer el placeholder*/
 input:focus::placeholder,
 textarea:focus::placeholder{
@@ -14,6 +18,23 @@ textarea:focus::placeholder{
   color: gray;
   font-size: 35px;
 }
+.bi-bell-fill{
+  width: 25px;
+}
 .bi-exclamation-triangle{
-  color:yellow;
+  color:red;
+}
+.bi-person-square{
+  width: 100px;
+  height: 150px;
+}
+
+
+.navbar{
+  background-color: #CEC9CB;
+}
+footer{
+  background-color: #3F3F3F;
+  height: auto;
+  max-height: 100vh;
 }

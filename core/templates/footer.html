@@ -1,6 +1,64 @@
-<div class="container-fluid bg-body-tertiary mt-4">
-    <div class="container py-2 d-flex justify-content-between">
-        <p class="form-text fw-lighter">Copyright © 2024 Desafío Latam</p>
-        <p class="form-text fw-lighter">Design by Mario Haro</p>
+<footer class="container-fluid mt-4">
+  <div class="container py-2 d-flex justify-content-between">
+    <p class="form-text fw-lighter text-white">
+      Copyright © 2024 Desafío Latam
+    </p>
+    <p class="form-text fw-lighter text-white">Design by Mario Haro</p>
+  </div>
+</footer>
+<!--Offcanvas de solicitudes enviadas y recibidas-->
+<div
+  class="offcanvas offcanvas-end"
+  tabindex="-1"
+  id="offcanvasRight"
+  aria-labelledby="offcanvasRightLabel"
+>
+  <div class="offcanvas-header">
+    <h2 class="offcanvas-title" id="offcanvasRightLabel">
+        Datos de los solicitante
+    </h2>
+    <button
+      type="button"
+      class="btn-close"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div>
+      <table class="table table-bordered">
+        
+          <tr>
+            <td>Nombre</td>
+            <td>Rut</td>
+            <td rowspan="2"><i class="bi bi-person-square"></i></td>
+        </tr>
+        <tr>
+        <td>Nombre</td>
+        <td>Rut</td>
+        
+          </tr>
+            <tr>
+              <th colspan="3" class="text-center">Vivienda Solicitada</th>
+            </tr>
+            <tr>
+              <td colspan="3" class="text-center"></td>
+            </tr>
+          </tbody>
+      </table>
     </div>
+    <div class="dropdown row">
+      <button
+        class="btn btn-success dropdown-toggle col-8 mx-auto"
+        type="button"
+        data-bs-toggle="dropdown"
+      >
+      <i class="bi bi-arrow-up"></i> Elige una opción
+      </button>
+      <ul class="dropdown-menu">
+        <li><a class="dropdown-item" href="#">Aceptar solicitud</a></li>
+        <li><a class="dropdown-item" href="#">rechazar solicitud</a></li>
+      </ul>
+    </div>
+  </div>
 </div>
